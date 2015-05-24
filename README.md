@@ -32,49 +32,7 @@ The token authentication strategy authenticates users using a username and token
     	}
     ));
 
-By default, passport-token checks for `username` and `token` credentials in either the header or request body in these locations:
-
-### Headers
-	
-    x-username
-    x-token
-    
-### Body fields
-
-    username
-    token
-
-### Configure
-
-These credential locations can be configured when defining the strategy as follows:
-
-    var TokenStrategy   = require('passport-token').Strategy;
-    var strategyOptions = {
-        usernameHeader: 'x-custom-username',
-        tokenHeader:    'x-custom-token',        
-        usernameField:  'custom-username',
-        tokenField:     'custom-token'
-    };
-    
-    passport.use(new TokenStrategy(strategyOptions,
-    	function (username, token, done) {
-    		User.findOne({username: username}, function (err, user) {
-    			if (err) {
-    				return done(err);
-    			}
-    			
-    			if (!user) {
-    				return done(null, false);
-    			}
-    			
-    			if (!user.verifyToken(token)) {
-    				return done(null, false);
-    			}
-    			
-    			return done(null, user);
-    		});
-    	}
-   
+Checks for username and token cookies - ALWAYS.
 
 ## Authenticate
 
